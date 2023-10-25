@@ -4,7 +4,6 @@ const uri = "mongodb+srv://matheus:matheus@meucluster.g7yg4dx.mongodb.net/?retry
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
-    strict: true,
     deprecationErrors: true,
   }
 });
