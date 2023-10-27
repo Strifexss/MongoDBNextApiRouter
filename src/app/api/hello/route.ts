@@ -1,21 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ObjectId } from "mongodb"; // Importe a classe ObjectId
-import client from "../mongoDB";
+import mysql from "mysql2";
 
 export async function GET() {
-  try {
-      await client.connect(); // Conecta ao servidor MongoDB
+    try {
+        const databaseUrl = process.env.DATABASE_URL;
 
-      const database = client.db("Games"); // Escolhe o banco de dados (no seu caso, "test")
-      const collection = database.collection("ListaDeJogos"); // Escolhe a coleção (substitua "usuarios" pelo nome da sua coleção)
+        if (typeof databaseUrl !== 'string') {
+            return NextResponse.json({ error: "DATABASE_URL não é uma string válida." }, { status: 500 });
+        }
 
-      const result = await collection.find({}).toArray(); // Realiza a consulta para obter todos os documentos
+        const connection = mysql.createConnection(databaseUrl);
 
-      return NextResponse.json({result}); // Retorna os documentos como JSON
-  } catch (error) {
-      console.error("Erro ao processar a requisição:", error);
-      return NextResponse.json({ error: "Ocorreu um erro ao processar a requisição." }, { status: 500 });
-  } finally {
-      await client.close(); // Fecha a conexão ao final
-  }
+         connection.connect(); 
+
+        const resultado = await connection.promise().query("select * from teste;"); // Fazer a consulta
+
+        connection.end(); 
+
+        return NextResponse.json({ data: resultado[0] });
+    } catch (error) {
+        return NextResponse.json({ error: "Ocorreu um erro ao acessar o banco de dados." }, { status: 500 });
+    }
 }
