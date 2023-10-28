@@ -2,9 +2,9 @@ import mysql, { Connection } from "mysql2";
 
 let connection: Connection | null = null;
 
-export const connectToDatabase = (databaseUrl: string) => {
-  connection = mysql.createConnection(databaseUrl);
-  connection.connect();
+export const ConnectToDatabase = (databaseUrl: string) => {
+    connection = mysql.createConnection(databaseUrl);
+    connection.connect();
 };
 
 export const closeDatabaseConnection = () => {
@@ -22,6 +22,6 @@ export const queryDatabase = async (query: string) => {
     const resultado = await connection.promise().query(query);
     return resultado[0];
   } catch (error) {
-    throw new Error("Ocorreu um erro ao consultar o banco de dados.");
+    throw new Error("Ocorreu um erro ao conectar-se com o banco de dados.");
   }
 };
