@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import mysql from "mysql2";
-import { ConnectToDatabase, closeDatabaseConnection } from './api/db';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,13 +14,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  try {
-    // Conectar ao banco de dados
-    const databaseUrl = `mysql://pzm2przys0y5de57k8s7:pscale_pw_ilUirjJK4CCup0nws05fiIV1Nr05xvwZKJ95TOJt7eG@aws.connect.psdb.cloud/bancodedados?ssl={"rejectUnauthorized":true}`
-    ConnectToDatabase(databaseUrl);
-  } catch (error) {
-    console.error('Erro ao conectar-se ao banco de dados:', error);
-  }
 
   return (
     <html lang="en">
