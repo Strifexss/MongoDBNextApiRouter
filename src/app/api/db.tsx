@@ -1,27 +1,13 @@
-import mysql, { Connection } from "mysql2";
+import { error } from "console";
+import { MongoClient } from "mongodb";
 
-let connection: Connection | null = null;
+const uri = "mongodb+srv://matheus:matheus@meucluster.g7yg4dx.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri);
 
-export const ConnectToDatabase = (databaseUrl: string) => {
-    connection = mysql.createConnection(databaseUrl);
-    connection.connect();
-};
+   client.connect()
+   const db = client.db("Games");
+  const queryListaDeJogos = db.collection("ListaDeJogos");
 
-export const closeDatabaseConnection = () => {
-  if (connection) {
-    connection.end();
-  }
-};
 
-export const queryDatabase = async (query: string) => {
-  try {
-    if (!connection) {
-      throw new Error("A conexão com o banco de dados não foi estabelecida.");
-    }
 
-    const resultado = await connection.promise().query(query);
-    return resultado[0];
-  } catch (error) {
-    throw new Error("Ocorreu um erro ao conectar-se com o banco de dados.");
-  }
-};
+export {queryListaDeJogos}
