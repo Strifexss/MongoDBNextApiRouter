@@ -11,6 +11,9 @@ interface dataNotification {
 }
 
 export default function NotificaitonMain({data}:dataNotification) {
+
+    console.log(data)
+
     return(
         <Notification.Wrapper>
           {
@@ -30,6 +33,13 @@ export default function NotificaitonMain({data}:dataNotification) {
                 )      
             })
           }
+                <Notification.Container BackgroundColor="Cinza">
+                    <Notification.Icon Icon={User2} />
+                    <Notification.Icon Icon={User2} />
+                    <Notification.Icon Icon={User2} />
+                    <Notification.Icon Icon={User2} />
+                    <Notification.Icon Icon={User2} />
+                </Notification.Container>
         </Notification.Wrapper>
     )
 }
